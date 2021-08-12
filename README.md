@@ -1,18 +1,23 @@
 # city-explorer-api
 
-## Project Name
-
 **Author**: Yazan Alkharabsheh
-**Version**: 2.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 3.0.0
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
+**Its a back end Application used to get the data of weather and movies for any wanted city.**
 
 ## Getting Started
 <!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+**create the dotenv file as the sample and run npm install after clone the repo.**
 
 ## Architecture
 <!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+* .Javascript
+* .MarkDown
+* .dotenv
+* .nodejs
+* .heroku
 
 ## Change Log
 
@@ -23,6 +28,8 @@
 08-08-2021 7:00pm - Application now has a fully-functional express server
 
 11-08-2021 7:00pm -  Application now has a fully-functional two express servers
+
+12-08-2021 7:00pm -  Application now has a fully-functional & Back end done
 
 ## Credit and Collaborations
 
@@ -76,3 +83,15 @@ Start time: 11/8/2021 - 5:30
 Finish time: 11/8/2021 - 6:30
 
 Actual time needed to complete: 60 min
+
+-----------------------------------------
+Name of feature: Add the cache feature and
+reset it after one day.
+
+Estimate of time needed to complete: 60 min
+
+Start time: 11/8/2021 - 3:30
+
+Finish time: 11/8/2021 - 7:30
+
+Actual time needed to complete: 4 hours
