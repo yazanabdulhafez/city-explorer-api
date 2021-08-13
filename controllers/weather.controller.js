@@ -12,34 +12,37 @@ const foreCastCache = new Cache();
 const weatherController = (req, res) => {
   let lat = req.query.lat;
   let lon = req.query.lon;
+  const weatherkey = `weather-${lat}-${lon}`;
 
-  const millis = Date.now() - foreCastCache.timeStamp;
+  if (lat && lon) {
 
+    if (foreCastCache[weatherkey] && Date.now() - foreCastCache[weatherkey].timeStamp < 1000 * 60 * 60 * 24) {
+      res.json({ message: 'data from cache', data: foreCastCache[weatherkey].savedData });
+    } else {
 
-  if (foreCastCache.foreCastData && (millis < 1000 * 60 * 60 * 24)) {
-    res.json({ message: 'data from cache', data: foreCastCache.foreCastData });
-  }
-  else {
+      let weatherBitUrl = `https://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API_KEY}&lat=${lat}&lon=${lon}`;
+      axios.get(weatherBitUrl).then((Response) => {
 
-    const weatherBitUrl = `https://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHER_API_KEY}&lat=${lat}&lon=${lon}`;
-    axios.get(weatherBitUrl).then((Response) => {
+        let weatherData = Response.data.data.map((element) => {
+          return new Forecast(element.weather.description,
+            element.datetime,
+            element.app_min_temp,
+            element.app_max_temp);
+        });
 
-      let weatherData = Response.data.data.map((element) => {
-        return new Forecast(element.weather.description,
-          element.datetime,
-          element.app_min_temp,
-          element.app_max_temp);
-      });
+        foreCastCache[weatherkey] = {};
+        foreCastCache[weatherkey].savedData = weatherData;
+        foreCastCache[weatherkey].timeStamp = Date.now();
+        res.json({ message: 'data from API', data: weatherData });
 
-      foreCastCache.foreCastData = weatherData;
-      foreCastCache.timeStamp = Date.now();
-      res.json(weatherData);
+      })
+        .catch((error) => {
+          res.send(error.message);
+        });
 
-    })
-      .catch((error) => {
-        res.send(error.message);
-      });
-
+    }
+  } else {
+    res.send('please enter the latitude and longitude ');
   }
 
 };
